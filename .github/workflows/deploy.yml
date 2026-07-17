@@ -45,6 +45,62 @@ jobs:
           name: dist
           path: dist/
 
+      - name: Create combined .htaccess
+        run: |
+          cat > dist/.htaccess << 'HTACCESS'
+          # BEGIN WordPress
+          # WordPress .htaccess rules - preserve WP routing
+          # END WordPress
+
+          # Vue PWA - serve index.html for SPA routes
+          <IfModule mod_rewrite.c>
+            RewriteEngine On
+            RewriteBase /
+
+            # Don't rewrite requests for wp-admin, wp-content, wp-includes, wp-json
+            RewriteCond %{REQUEST_URI} ^/(wp-admin|wp-content|wp-includes|wp-json|wp-login|wp-cron|xmlrpc) [OR]
+            RewriteCond %{REQUEST_FILENAME} -f [OR]
+            RewriteCond %{REQUEST_FILENAME} -d
+            RewriteRule ^ - [L]
+
+            # Vue Router history mode fallback
+            RewriteRule ^ index.html [L]
+          </IfModule>
+
+          # Security headers
+          <IfModule mod_headers.c>
+            Header set X-Content-Type-Options "nosniff"
+            Header set X-Frame-Options "SAMEORIGIN"
+            Header set X-XSS-Protection "1; mode=block"
+            Header set Referrer-Policy "strict-origin-when-cross-origin"
+          </IfModule>
+
+          # Cache static assets
+          <IfModule mod_expires.c>
+            ExpiresActive On
+            ExpiresByType text/html "access plus 1 hour"
+            ExpiresByType text/css "access plus 1 month"
+            ExpiresByType application/javascript "access plus 1 month"
+            ExpiresByType image/png "access plus 1 year"
+            ExpiresByType image/jpeg "access plus 1 year"
+            ExpiresByType image/svg+xml "access plus 1 year"
+            ExpiresByType application/json "access plus 0 seconds"
+          </IfModule>
+
+          # Gzip compression
+          <IfModule mod_deflate.c>
+            AddOutputFilterByType DEFLATE text/html text/plain text/css
+            AddOutputFilterByType DEFLATE application/javascript application/json
+            AddOutputFilterByType DEFLATE image/svg+xml
+          </IfModule>
+
+          # MIME types for PWA
+          <IfModule mod_mime.c>
+            AddType application/manifest+json .json
+            AddType application/javascript .js
+          </IfModule>
+          HTACCESS
+
       - name: Deploy via FTP
         uses: SamKirkland/FTP-Deploy-Action@v4
         with:
@@ -52,10 +108,9 @@ jobs:
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
           local-dir: ./dist/
-          server-dir: /home/u97404/domains/france.baseuse.xyz/public_ftp/
+          server-dir: /home/u97404/domains/france.baseuse.xyz/public_html/
           protocol: ftp
           port: 21
           exclude: |
             .git*
             .gitignore
-            .htaccess

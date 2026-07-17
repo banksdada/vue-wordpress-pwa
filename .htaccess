@@ -1,12 +1,21 @@
+# BEGIN WordPress
+# Standard WordPress .htaccess - handles wp-admin, wp-content, wp-includes, wp-json
 <IfModule mod_rewrite.c>
-  RewriteEngine On
-  RewriteBase /
+RewriteEngine On
+RewriteBase /
+RewriteRule ^index\.php$ - [L]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule . /index.php [L]
+</IfModule>
+# END WordPress
 
-  # Handle Vue Router history mode
-  RewriteRule ^index\.html$ - [L]
+# Vue PWA - serve index.html for SPA routes (after WordPress rules)
+<IfModule mod_rewrite.c>
+  RewriteCond %{REQUEST_URI} !^/(wp-admin|wp-content|wp-includes|wp-json|wp-login|wp-cron|xmlrpc) [NC]
   RewriteCond %{REQUEST_FILENAME} !-f
   RewriteCond %{REQUEST_FILENAME} !-d
-  RewriteRule . /index.html [L]
+  RewriteRule ^(?!index\.php$) index.html [L]
 </IfModule>
 
 # Security headers
@@ -34,10 +43,4 @@
   AddOutputFilterByType DEFLATE text/html text/plain text/css
   AddOutputFilterByType DEFLATE application/javascript application/json
   AddOutputFilterByType DEFLATE image/svg+xml
-</IfModule>
-
-# MIME types for PWA
-<IfModule mod_mime.c>
-  AddType application/manifest+json .json
-  AddType application/javascript .js
 </IfModule>
