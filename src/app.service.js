@@ -52,6 +52,21 @@ let wordpressService = {
         .catch(error => reject(error))
     })
   },
+  getAllPosts (page, perPage, order = 'desc') {
+    return new Promise((resolve, reject) => {
+      let path = Config.wpDomain + `wp-json/wp/v2/posts?page=${page}&order=${order}&per_page=${perPage}&fields=id,title,slug,date,better_featured_image,excerpt`
+      this.cacheRequest(path, 0)
+        .then(response => {
+          var totalPages = (response.headers.hasOwnProperty('X-WP-TotalPages')) ? response.headers['X-WP-TotalPages'][0] : 0
+          if (totalPages === 0) {
+            totalPages = (response.headers.hasOwnProperty('x-wp-totalpages')) ? response.headers['x-wp-totalpages'][0] : 0
+          }
+          var responseData = {posts: response.data, totalPages: totalPages}
+          resolve(responseData)
+        })
+        .catch(error => reject(error))
+    })
+  },
   getPost (postId, postSlug) {
     return new Promise((resolve, reject) => {
       let path = Config.wpDomain + `wp-json/wp/v2/posts/${postId}?fields=id,title,slug,tags,date,better_featured_image,content,rest_api_enabler,pure_taxonomies`

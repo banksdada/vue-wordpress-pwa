@@ -1,4 +1,5 @@
 import Vue from 'vue'
+import ThemePageHome from '../theme/Home.vue'
 import ThemePageCategory from '../theme/Category.vue'
 import ThemePageSingle from '../theme/Single.vue'
 import ThemePagePage from '../theme/Page.vue'
@@ -23,7 +24,7 @@ const router = new VueRouter({
     { path: '/category/:id', component: ThemePageCategory, params: { page: 1 } },
     { path: '/offline-redirect', component: OfflineRedirect },
     { path: '/:id', component: ThemePageSingle },
-    { path: '/', name: 'Home', redirect: '/category/uncategorized/' }
+    { path: '/', name: 'Home', component: ThemePageHome }
   ]
 })
 
