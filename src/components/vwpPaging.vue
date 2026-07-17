@@ -1,15 +1,16 @@
 <template>
   <div class="vwp-paging">
     <div class="paging-wrapper">
-      <router-link
-        v-for="(item) in pages"
-        v-bind:key="item"
-        v-if="item !== '...'"
-        v-bind:class="{ 'is-active': ((page == null && item === 1) || (item === page)) }"
-        :to="path + '/page/' + item + '/'"
-        class="page-link"
-      >{{ item }}</router-link>
-      <span v-if="item === '...'" class="page-dots">...</span>
+      <template v-for="(item) in pages">
+        <router-link
+          v-if="item !== '...'"
+          v-bind:key="item"
+          v-bind:class="{ 'is-active': ((page == null && item === 1) || (item === page)) }"
+          :to="path + '/page/' + item + '/'"
+          class="page-link"
+        >{{ item }}</router-link>
+        <span v-else v-bind:key="'dots-'+item" class="page-dots">...</span>
+      </template>
     </div>
   </div>
 </template>
