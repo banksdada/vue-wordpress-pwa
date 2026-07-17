@@ -102,17 +102,17 @@ jobs:
           HTACCESS
 
       - name: Create tarball
-        run: tar -czf dist.tar.gz -C dist .
+        run: |
+          mkdir -p deploy
+          tar -czf deploy/dist.tar.gz -C dist .
 
-      - name: Upload tarball via FTP
+      - name: Deploy tarball via FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.4.0
         with:
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
-          local-dir: ./
+          local-dir: ./deploy/
           server-dir: /home/u97404/domains/france.baseuse.xyz/public_ftp/
           protocol: ftp
           port: 21
-          include: |
-            dist.tar.gz
