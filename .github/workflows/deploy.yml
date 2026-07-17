@@ -108,7 +108,7 @@ jobs:
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
           local-dir: ./dist/
-          server-dir: /home/u97404/domains/france.baseuse.xyz/public_ftp/
+          server-dir: /home/u97404/domains/france.baseuse.xyz/public_html/
           protocol: ftp
           port: 21
           exclude: |
