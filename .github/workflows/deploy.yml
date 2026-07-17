@@ -101,21 +101,18 @@ jobs:
           </IfModule>
           HTACCESS
 
-      - name: Deploy to public_ftp via FTP
+      - name: Create tarball
+        run: tar -czf dist.tar.gz -C dist .
+
+      - name: Upload tarball via FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.4.0
         with:
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
-          local-dir: ./dist/
+          local-dir: ./
           server-dir: /home/u97404/domains/france.baseuse.xyz/public_ftp/
           protocol: ftp
           port: 21
-          exclude: |
-            .git*
-            .gitignore
-
-      - name: Install sshpass and copy files to public_html via SSH
-        run: |
-          sudo apt-get install -y sshpass
-          sshpass -p "${{ secrets.FTP_PASSWORD }}" scp -o StrictHostKeyChecking=no -r dist/* one@france.baseuse.xyz:/home/u97404/domains/france.baseuse.xyz/public_html/
+          include: |
+            dist.tar.gz
