@@ -7,7 +7,7 @@
       </div>
     </section>
     <app-footer></app-footer>
-    <ga-analytics ua="UA-31484897-2"></ga-analytics>
+    <ga-analytics ua=""></ga-analytics>
   </div>
 </template>
 

@@ -3,9 +3,9 @@
     <div class="navbar-brand">
       <router-link to="/category/blog/" class="navbar-item">
         <img
-          src="https://api.fullstackweekly.com/wp-content/uploads/2017/03/logo-horizontal.png"
+          src="/assets/logo-horizontal.png"
           id="vwp-logo"
-          alt="Full Stack Weekly"
+          alt="BaseUse"
           exact
       /></router-link>
 
@@ -27,7 +27,7 @@
         <div class="navbar-item">
           <span v-on:click="closeMenu">
             <router-link class="is-tab nav-item" to="/category/blog/"
-              >Personal Blog</router-link
+              >Blog</router-link
             >
           </span>
         </div>
@@ -40,27 +40,10 @@
         </div>
         <div class="navbar-item">
           <span v-on:click="closeMenu">
-            <router-link class="is-tab nav-item" to="/page/about-bill/"
+            <router-link class="is-tab nav-item" to="/page/about/"
               >About</router-link
             >
           </span>
-        </div>
-        <div class="navbar-item">
-          <div class="field is-grouped">
-            <p class="control">
-              <a
-                class="button"
-                target="_blank"
-                rel="noopener"
-                href="https://twitter.com/bstavroulakis"
-              >
-                <span class="icon">
-                  <i class="icon-twitter"></i>
-                </span>
-                <span>Twitter</span>
-              </a>
-            </p>
-          </div>
         </div>
       </div>
     </div>

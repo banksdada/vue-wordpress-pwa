@@ -13,9 +13,9 @@ var config = {
     '/offline-redirect/'
   ],
   'paths': {
-    'api': 'https://api.fullstackweekly.com/wp-json',
-    'remote': 'https://api.fullstackweekly.com/',
-    'client': 'http://localhost:3000/'
+    'api': 'https://france.baseuse.xyz/wp-json',
+    'remote': 'https://france.baseuse.xyz/',
+    'client': 'https://france.baseuse.xyz/'
   },
   'cacheNames': {
     'assetCache': 'vwpCacheAsset',

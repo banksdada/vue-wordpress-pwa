@@ -4,7 +4,7 @@
   "description": "An offline-first SPA using Vue.js, the WordPress REST API and Progressive Web Apps",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/bstavroulakis/vue-wordpress-pwa"
+    "url": "git+https://github.com/banksdada/vue-wordpress-pwa"
   },
   "keywords": [
     "vue",
@@ -21,9 +21,9 @@
   "author": "bstavroulakis <bstavroulakis@gmail.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/bstavroulakis/vue-wordpress-pwa/issues"
+    "url": "https://github.com/banksdada/vue-wordpress-pwa/issues"
   },
-  "homepage": "https://github.com/bstavroulakis/vue-wordpress-pwa#readme",
+  "homepage": "https://france.baseuse.xyz",
   "scripts": {
     "start": "cross-env NODE_ENV=production node server",
     "dev": "rimraf ./dist && cross-env NODE_ENV=development node server",

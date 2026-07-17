@@ -1,16 +1,16 @@
 'use strict'
 
 const Config = {
-  appTitle: 'Full Stack Weekly',
-  appTitleShort: 'FSW',
-  appDescription: 'A free weekly newsletter for the modern full-stack developer.',
-  appThemeColor: '#287ab1',
+  appTitle: 'BaseUse',
+  appTitleShort: 'BU',
+  appDescription: 'BaseUse - Your digital workspace powered by WordPress.',
+  appThemeColor: '#1a73e8',
   appBgColor: '#ffffff',
   appIcon: 'assets/app-icon.png',
-  wpDomain: 'https://api.fullstackweekly.com/',
-  client: 'https://www.fullstackweekly.com/',
+  wpDomain: 'https://france.baseuse.xyz/',
+  client: 'https://france.baseuse.xyz/',
   loadDbName: 'vwpLocal',
-  analyticsPath: '//www.google-analytics.com/analytics.js'
+  analyticsPath: ''
 }
 
 module.exports = Config
