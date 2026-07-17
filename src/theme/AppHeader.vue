@@ -1,89 +1,100 @@
 <template>
-  <nav class="navbar">
+  <nav class="navbar is-transparent" role="navigation">
     <div class="navbar-brand">
-      <router-link to="/category/uncategorized/" class="navbar-item">
-        <img
-          src="/assets/logo-horizontal.png"
-          id="vwp-logo"
-          alt="BaseUse"
-          exact
-      /></router-link>
-
-      <div
-        class="navbar-burger burger"
-        data-target="navMenuColorprimary-example"
-        v-on:click="toggleMenu"
-      >
-        <span></span>
-        <span></span>
-        <span></span>
-      </div>
+      <router-link to="/" class="navbar-item brand-item">
+        <span class="brand-icon">BU</span>
+        <span class="brand-text">BaseUse</span>
+      </router-link>
+      <a role="button" class="navbar-burger burger" :class="{ 'is-active': isMenuActive }" v-on:click="toggleMenu" aria-label="menu">
+        <span></span><span></span><span></span>
+      </a>
     </div>
-
-    <div v-bind:class="{ 'navbar-menu': true, 'is-active': isMenuActive }">
+    <div class="navbar-menu" :class="{ 'is-active': isMenuActive }">
       <div class="navbar-start"></div>
-
-      <div v-bind:class="{ 'navbar-end': true, 'is-active': isMenuActive }">
+      <div class="navbar-end">
+        <router-link class="navbar-item nav-link" to="/category/uncategorized/" v-on:click.native="closeMenu">Blog</router-link>
+        <router-link class="navbar-item nav-link" to="/page/about/" v-on:click.native="closeMenu">About</router-link>
         <div class="navbar-item">
-          <span v-on:click="closeMenu">
-            <router-link class="is-tab nav-item" to="/category/uncategorized/"
-              >Blog</router-link
-            >
-          </span>
-        </div>
-        <div class="navbar-item">
-          <span v-on:click="closeMenu">
-            <router-link class="is-tab nav-item" to="/category/learning-paths/"
-              >Learning Paths</router-link
-            >
-          </span>
-        </div>
-        <div class="navbar-item">
-          <span v-on:click="closeMenu">
-            <router-link class="is-tab nav-item" to="/page/about/"
-              >About</router-link
-            >
-          </span>
+          <a class="dark-toggle" v-on:click="$emit('toggle-dark')" :title="darkMode ? 'Light mode' : 'Dark mode'">
+            <span v-if="darkMode">&#9728;</span>
+            <span v-else>&#9790;</span>
+          </a>
         </div>
       </div>
     </div>
   </nav>
 </template>
+
 <script>
-  export default {
-    name: "app-header",
-    data: () => {
-      return {
-        isMenuActive: false,
-        siteName: "",
-        blogItems: []
-      };
-    },
-    methods: {
-      toggleMenu() {
-        this.isMenuActive = !this.isMenuActive;
-      },
-      closeMenu() {
-        this.isMenuActive = false;
-      },
-      relativePath(url) {
-        url = url.replace("https://", "");
-        var domain = url.split("/")[0];
-        return url.replace(domain, "");
-      }
-    }
-  };
+export default {
+  name: 'app-header',
+  props: ['darkMode'],
+  data () {
+    return { isMenuActive: false }
+  },
+  methods: {
+    toggleMenu () { this.isMenuActive = !this.isMenuActive },
+    closeMenu () { this.isMenuActive = false }
+  }
+}
 </script>
-<style>
-  #vwp-logo {
-    max-width: 350px;
-    max-height: 3rem;
+
+<style lang="scss" scoped>
+  @import '../variables';
+
+  .navbar {
+    background: rgba(255, 255, 255, 0.9) !important;
+    backdrop-filter: blur(20px);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+    padding: 0.5rem 1rem;
+    transition: all $transition-smooth;
   }
-  #app-header .nav-menu > span > a {
-    vertical-align: middle;
+
+  .brand-item {
+    padding: 0.5rem 1rem;
   }
-  .nav-toggle {
-    position: absolute;
-    right: 0;
+
+  .brand-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    background: linear-gradient(135deg, $gradient-start, $gradient-end);
+    color: white;
+    border-radius: 10px;
+    font-weight: 800;
+    font-size: 0.85rem;
+    margin-right: 0.5rem;
+  }
+
+  .brand-text {
+    font-weight: 700;
+    font-size: 1.25rem;
+    color: $text-primary;
+    letter-spacing: -0.5px;
+  }
+
+  .nav-link {
+    font-weight: 500;
+    transition: color $transition-fast;
+    &:hover {
+      color: $primary !important;
+    }
+  }
+
+  .dark-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #2d3436, #636e72);
+    color: white;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: transform $transition-fast;
+    &:hover { transform: rotate(20deg) scale(1.1); }
   }
 </style>

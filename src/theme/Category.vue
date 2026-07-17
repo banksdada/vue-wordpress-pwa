@@ -1,24 +1,26 @@
 <template>
-  <section>
+  <div>
     <div class="card personal-card" v-if="categories && categories.length === 1 && categories[0].slug === 'uncategorized'">
-      <div class="columns">
-        <div class="column personal-img">
-          <img src="/assets/app-icon.png"
-          alt="BaseUse" width="100" />
+      <div class="welcome-content">
+        <div class="welcome-icon">
+          <span class="welcome-emoji">&#128640;</span>
         </div>
-        <div class="column is-three-quarters personal-desc">
-          Welcome to <strong>BaseUse</strong> - your digital workspace powered by WordPress and Vue.js PWA.
+        <div class="welcome-text">
+          <h2>Welcome to BaseUse</h2>
+          <p>Your digital workspace powered by WordPress &amp; Vue.js PWA. Explore the latest posts below.</p>
         </div>
       </div>
     </div>
     <div class="clearfix"></div>
     <div class="columns category-posts" v-if="!categories || categories.length === 0">
-      <div class="column is-one-third"><div class="card fake-card"><div class="card-content">&nbsp;</div></div></div>
-      <div class="column is-one-third"><div class="card fake-card"><div class="card-content">&nbsp;</div></div></div>
-      <div class="column is-one-third"><div class="card fake-card"><div class="card-content">&nbsp;</div></div></div>
+      <div class="column is-one-third" v-for="n in 6" v-bind:key="'skeleton-'+n">
+        <div class="card fake-card">
+          <div class="card-content">&nbsp;</div>
+        </div>
+      </div>
     </div>
-    <vwp-subcategory :categories="categories" ></vwp-subcategory>
-  </section>
+    <vwp-subcategory :categories="categories"></vwp-subcategory>
+  </div>
 </template>
 
 <script>
@@ -26,7 +28,7 @@ import { mapGetters } from 'vuex'
 import VwpSubcategory from 'components/vwpSubcategory.vue'
 const fetchInitialData = (store, route) => {
   route.params.page = route.params.page || 1
-  return store.dispatch(`category/getCategory`, {categorySlug: route.params.id, page: route.params.page})
+  return store.dispatch('category/getCategory', {categorySlug: route.params.id, page: route.params.page})
 }
 export default {
   name: 'ThemePageCategory',
@@ -34,9 +36,7 @@ export default {
     'vwp-subcategory': VwpSubcategory
   },
   computed: {
-    ...mapGetters('category', [
-      'categories'
-    ])
+    ...mapGetters('category', ['categories'])
   },
   methods: {
     loadPosts () {
@@ -56,20 +56,45 @@ export default {
 </script>
 
 <style lang="scss">
-  .personal-card{
+  @import '../variables';
+
+  .personal-card {
+    background: linear-gradient(135deg, rgba($primary, 0.05), rgba($accent, 0.05));
+    border: 1px solid rgba($primary, 0.1);
+    border-radius: $radius;
+    padding: 2rem !important;
+    margin-bottom: 2rem;
+    transition: transform $transition-smooth, box-shadow $transition-smooth;
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: $card-hover-shadow;
+    }
+  }
+
+  .welcome-content {
     display: flex;
-    padding: 10px;
-    margin-bottom: 20px;
+    align-items: center;
+    gap: 1.5rem;
   }
-  .personal-img{
-    text-align: center;
-    align-self: center;
-    margin-bottom:0;
+
+  .welcome-icon {
+    flex-shrink: 0;
   }
-  .personal-desc{
-    align-self: center;
+
+  .welcome-emoji {
+    font-size: 3rem;
   }
-  .category-posts{
-    flex-wrap:wrap;
+
+  .welcome-text {
+    h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+    p {
+      color: $text-secondary;
+      margin: 0;
+      line-height: 1.5;
+    }
   }
 </style>
