@@ -1,7 +1,7 @@
 <template>
   <nav class="navbar">
     <div class="navbar-brand">
-      <router-link to="/category/blog/" class="navbar-item">
+      <router-link to="/category/uncategorized/" class="navbar-item">
         <img
           src="/assets/logo-horizontal.png"
           id="vwp-logo"
@@ -26,7 +26,7 @@
       <div v-bind:class="{ 'navbar-end': true, 'is-active': isMenuActive }">
         <div class="navbar-item">
           <span v-on:click="closeMenu">
-            <router-link class="is-tab nav-item" to="/category/blog/"
+            <router-link class="is-tab nav-item" to="/category/uncategorized/"
               >Blog</router-link
             >
           </span>
